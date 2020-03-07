@@ -1,0 +1,19 @@
+version: '3'
+services:
+    api:
+        image: golang
+        container_name: fizzbuzz-api
+        command: go run main.go
+        volumes:
+            - .:/go/src/fizzbuzz-api
+        working_dir: /go/src/fizzbuzz-api
+        ports:
+            - "3000:3000"
+        environment:
+            PORT: 3000
+            REDIS_URL: redis:6379
+        links:
+            - redis
+    redis:
+        image: redis:alpine
+        container_name: fizzbuzz-redis
