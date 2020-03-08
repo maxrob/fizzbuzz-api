@@ -11,13 +11,12 @@ services:
             - "3000:3000"
         environment:
             PORT: 3000
-            REDIS_URL: redis:6379
+            PRODUCTION_DATABASE: fizzbuzz-database
+            TEST_DATABASE: fizzbuzz-test
         links:
             - database
     database: 
         image: mongo:latest
         container_name: fizzbuzz-mongo
-        environment: 
-            - MONGO_INITDB_DATABASE=fizzbuzz-database
         ports:
             - '27100:27017'

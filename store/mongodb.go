@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -34,5 +35,5 @@ func NewMongoDB() MongoDB {
 }
 
 func (mgo MongoDB) GetCollection(dbName string) *mongo.Collection {
-	return mgo.client.Database("fizzbuzz-database").Collection(dbName)
+	return mgo.client.Database(os.Getenv("PRODUCTION_DATABASE")).Collection(dbName)
 }
