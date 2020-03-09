@@ -6,6 +6,7 @@ services:
         command: go run main.go
         volumes:
             - .:/go/src/fizzbuzz-api
+            - $GOPATH/pkg/mod/cache:/go/pkg/mod/cache
         working_dir: /go/src/fizzbuzz-api
         ports:
             - "3000:3000"
