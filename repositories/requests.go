@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 
+	"github.com/fizzbuzz-api/helpers"
 	"github.com/fizzbuzz-api/models"
 	"github.com/fizzbuzz-api/store"
 	"go.mongodb.org/mongo-driver/bson"
@@ -25,7 +26,7 @@ func UpdateRequest(s store.Storer, request *models.Request) error {
 	result := &models.Request{}
 	err := collection.FindOne(context.TODO(), filter, opts).Decode(result)
 	if err != nil && err != mongo.ErrNoDocuments {
-		return errors.New("database-find-error")
+		return errors.New(helpers.ErrorDatabaseFind)
 	}
 
 	if err != mongo.ErrNoDocuments {
@@ -35,7 +36,7 @@ func UpdateRequest(s store.Storer, request *models.Request) error {
 
 		_, err := collection.UpdateOne(context.TODO(), filter, update, opts)
 		if err != nil {
-			return errors.New("database-update-error")
+			return errors.New(helpers.ErrorDatabaseUpdate)
 		}
 
 		return nil
@@ -44,7 +45,7 @@ func UpdateRequest(s store.Storer, request *models.Request) error {
 	request.Iteration = 1
 	_, err = collection.InsertOne(context.TODO(), request)
 	if err != nil {
-		return errors.New("database-insert-error")
+		return errors.New(helpers.ErrorDatabaseInsert)
 	}
 
 	return nil
@@ -57,7 +58,7 @@ func GetMostPopularRequest(s store.Storer) (*models.Request, error) {
 	result := &models.Request{}
 	err := collection.FindOne(context.TODO(), bson.D{}, opts).Decode(&result)
 	if err != nil && err != mongo.ErrNoDocuments {
-		return nil, errors.New("database-find-error")
+		return nil, errors.New(helpers.ErrorDatabaseFind)
 	}
 
 	if err == mongo.ErrNoDocuments {

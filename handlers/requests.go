@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
+	"github.com/fizzbuzz-api/helpers"
 	"github.com/fizzbuzz-api/repositories"
 	"github.com/fizzbuzz-api/store"
 )
@@ -12,7 +13,7 @@ func GetMostPopularRequestHandler(s store.Storer) func(http.ResponseWriter, *htt
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		if r.Method != http.MethodGet {
-			http.Error(w, "method-not-allowed", http.StatusMethodNotAllowed)
+			http.Error(w, helpers.ErrorMethodNotAllowed, http.StatusMethodNotAllowed)
 			return
 		}
 
@@ -24,7 +25,7 @@ func GetMostPopularRequestHandler(s store.Storer) func(http.ResponseWriter, *htt
 
 		json_response, err := json.Marshal(result)
 		if err != nil {
-			http.Error(w, "json-encode-error", http.StatusInternalServerError)
+			http.Error(w, helpers.ErrorJSONEncode, http.StatusInternalServerError)
 			return
 		}
 

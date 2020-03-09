@@ -64,7 +64,7 @@ func GetFizzbuzzHandler(s store.Storer) func(http.ResponseWriter, *http.Request)
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		if r.Method != http.MethodGet {
-			http.Error(w, "method-not-allowed", http.StatusMethodNotAllowed)
+			http.Error(w, helpers.ErrorMethodNotAllowed, http.StatusMethodNotAllowed)
 			return
 		}
 
@@ -77,7 +77,7 @@ func GetFizzbuzzHandler(s store.Storer) func(http.ResponseWriter, *http.Request)
 		results := getFizzbuzzList(request)
 		json_response, err := json.Marshal(results)
 		if err != nil {
-			http.Error(w, "json-encode-error", http.StatusInternalServerError)
+			http.Error(w, helpers.ErrorJSONEncode, http.StatusInternalServerError)
 			return
 		}
 

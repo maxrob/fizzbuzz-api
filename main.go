@@ -9,9 +9,7 @@ import (
 )
 
 func main() {
-	var storer store.Storer
-	storer = store.NewMongoDB()
-
+	storer := store.NewMongoDB()
 	http.HandleFunc("/fizzbuzzs", handlers.GetFizzbuzzHandler(storer))
 	http.HandleFunc("/fizzbuzzs/most_popular_request", handlers.GetMostPopularRequestHandler(storer))
 	http.ListenAndServe(":"+os.Getenv("PORT"), nil)
